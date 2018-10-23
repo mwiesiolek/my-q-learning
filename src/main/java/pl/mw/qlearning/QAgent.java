@@ -1,6 +1,7 @@
 package pl.mw.qlearning;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -57,25 +58,28 @@ public class QAgent {
      * this means we use what we already know to select the best action at each step
      */
     private int exploit() {
-        return reward.findBestAction(currentState);
+        return memory.findBestAction(currentState);
     }
 
     /**
      * This means we need to do a lot of exploration, by randomly choosing our actions.
      */
     private int explore() {
-        List<Float> state = reward.getRewardsForState(currentState);
+        List<Float> rewards = reward.getRewardsForState(currentState);
 
-        List<Tuple<Integer, Float>> rewards = new ArrayList<>();
-        for (int i = 0; i < state.size(); i++) {
-            if (state.get(i) >= 0) {
-                rewards.add(new Tuple<>(i, state.get(i)));
+        List<Tuple<Integer, Float>> availableRewards = new ArrayList<>();
+        for (int i = 0; i < rewards.size(); i++) {
+            if (rewards.get(i) >= 0) {
+                availableRewards.add(new Tuple<>(i, rewards.get(i)));
             }
         }
 
-        return rewards.stream()
-                .max(Comparator.comparing(Tuple::getValue))
-                .map(Tuple::getKey)
-                .orElseThrow(IllegalStateException::new);
+        if (availableRewards.isEmpty()) {
+            throw new IllegalStateException("Cannot be empty.");
+        }
+
+        Collections.shuffle(availableRewards);
+
+        return availableRewards.get(0).getKey();
     }
 }
