@@ -13,20 +13,25 @@ public class QController {
         agent.init(states, actions);
 
         for (int i = 0; i < episodes; i++) {
+            Integer state = reward.pickRandomState();
+            agent.setCurrentState(state);
+
             while (agent.getCurrentState() != goalState) {
+                int action = agent.pickAction();
+                agent.setCurrentState(action);
 
-                Integer state = reward.pickRandomState();
-                agent.setCurrentState(state);
-
-                // todo this needs more robust logic
-                int action = agent.pickAction(state);
+                System.out.println(String.format("Reward %s for (state=%s,action=%s)", reward.getReward(agent.getCurrentState(), action),
+                        agent.getCurrentState(), action));
 
                 Float newQ = computeQ(state, action);
                 agent.updateQ(action, newQ);
             }
+
+            float delta = (float) i / episodes;
+            agent.updateEpsilon(delta);
         }
 
-        agent.printMemory();
+        agent.printQTable();
     }
 
     private Float computeQ(int state, int action) {

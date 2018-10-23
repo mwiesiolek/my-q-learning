@@ -4,7 +4,7 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public class QMemory {
+public class QTable {
     private QMatrix matrix;
 
     public int findBestAction(int selected) {
@@ -17,6 +17,7 @@ public class QMemory {
             }
         }
 
+        //todo what if there are multiple equal Q values?
         return state.indexOf(max);
     }
 

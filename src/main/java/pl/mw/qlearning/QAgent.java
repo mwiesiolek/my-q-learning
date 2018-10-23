@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @NoArgsConstructor
 public class QAgent {
-    private QMemory memory;
+    private QTable table;
 
     @Getter
     @Setter
@@ -21,29 +21,41 @@ public class QAgent {
         QMatrix matrix = new QMatrix();
         matrix.init(states, actions);
 
-        memory = new QMemory(matrix);
+        table = new QTable(matrix);
     }
 
     public Float getQ(int state, int action) {
-        return memory.getValue(state, action);
+        return table.getValue(state, action);
     }
 
-    public int pickAction(int selected) {
-
+    public int pickAction() {
         if (ThreadLocalRandom.current()
                 .nextFloat() > epsilon) {
-            return exploit(selected);
+            return exploit(currentState);
         } else {
-            return explore(selected);
+            return explore(currentState);
         }
     }
 
+    public void updateQ(int action, Float q) {
+        table.updateValue(currentState, action, q);
+    }
+
+    public void printQTable() {
+        table.print();
+    }
+
+    public void updateEpsilon(float delta) {
+        epsilon -= delta;
+        System.out.println(String.format("New epsilon: %s", epsilon));
+    }
+
     private int exploit(int selected) {
-        return memory.findBestAction(selected);
+        return table.findBestAction(selected);
     }
 
     private int explore(int selected) {
-        List<Float> state = memory.getState(selected);
+        List<Float> state = table.getState(selected);
 
         List<Integer> availableMoves = new ArrayList<>();
         for (int i = 0; i < state.size(); i++) {
@@ -57,13 +69,5 @@ public class QAgent {
                 .nextInt(0, availableMoves.size());
 
         return availableMoves.get(randomAction);
-    }
-
-    public void updateQ(int action, Float q) {
-        memory.updateValue(currentState, action, q);
-    }
-
-    public void printMemory() {
-        memory.print();
     }
 }
