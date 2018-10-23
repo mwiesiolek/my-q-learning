@@ -59,11 +59,6 @@ public class QMatrix {
                 .get(action);
     }
 
-    public int pickRandomState() {
-        return ThreadLocalRandom.current()
-                .nextInt(0, values.size());
-    }
-
     public void print() {
         for (List<Float> state : values) {
             String join = state.stream()
