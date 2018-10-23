@@ -53,16 +53,22 @@ public class QAgent {
         epsilon -= delta;
     }
 
+    /**
+     * this means we use what we already know to select the best action at each step
+     */
     private int exploit() {
         return reward.findBestAction(currentState);
     }
 
+    /**
+     * This means we need to do a lot of exploration, by randomly choosing our actions.
+     */
     private int explore() {
         List<Float> state = reward.getRewardsForState(currentState);
 
         List<Tuple<Integer, Float>> rewards = new ArrayList<>();
         for (int i = 0; i < state.size(); i++) {
-            if (state.get(i) >= 0 && i != currentState) {
+            if (state.get(i) >= 0) {
                 rewards.add(new Tuple<>(i, state.get(i)));
             }
         }

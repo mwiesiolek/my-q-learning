@@ -36,7 +36,7 @@ public class QReward {
 
         Tuple<Integer, Float> max = new Tuple<>(NOT_EXIST_IDS, -1_000.0F);
         for (int i = 0; i < state.size(); i++) {
-            if (state.get(i) > max.getValue() && selected != i) {
+            if (state.get(i) > max.getValue()) {
                 max = new Tuple<>(i, state.get(i));
             }
         }

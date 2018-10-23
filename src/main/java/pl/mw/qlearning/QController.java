@@ -31,7 +31,6 @@ public class QController {
 
             float delta = (float) i / episodes;
             agent.updateEpsilon(delta);
-            System.out.println(String.format("Episode: %s", (i + 1)));
         }
 
         agent.printQTable();

@@ -17,12 +17,12 @@ public class QMain {
         QMatrix matrix = new QMatrix();
         matrix.setStates(STATES);
         matrix.setActions(ACTIONS);
-        matrix.addState(Lists.newArrayList(-1.0f, -1.0f, -1.0f, -1.0f, 0.0f, -1.0f));
-        matrix.addState(Lists.newArrayList(-1.0f, -1.0f, -1.0f, 0.0f, -1.0f, 100.0f));
-        matrix.addState(Lists.newArrayList(-1.0f, -1.0f, -1.0f, 0.0f, -1.0f, -1.0f));
-        matrix.addState(Lists.newArrayList(-1.0f, 0.0f, 0.0f, -1.0f, 0.0f, -1.0f));
-        matrix.addState(Lists.newArrayList(0.0f, -1.0f, -1.0f, 0.0f, -1.0f, 100.0f));
-        matrix.addState(Lists.newArrayList(-1.0f, 0.0f, -1.0f, -1.0f, 0.0f, 100.0f));
+        matrix.addState(Lists.newArrayList(-1.0f, -1.0f, -1.0f, -1.0f, 1.0f, -1.0f));
+        matrix.addState(Lists.newArrayList(-1.0f, -1.0f, -1.0f, 1.0f, -1.0f, 100.0f));
+        matrix.addState(Lists.newArrayList(-1.0f, -1.0f, -1.0f, 1.0f, -1.0f, -1.0f));
+        matrix.addState(Lists.newArrayList(-1.0f, 1.0f, 1.0f, -1.0f, 1.0f, -1.0f));
+        matrix.addState(Lists.newArrayList(1.0f, -1.0f, -1.0f, 1.0f, -1.0f, 100.0f));
+        matrix.addState(Lists.newArrayList(-1.0f, 1.0f, -1.0f, -1.0f, 1.0f, 100.0f));
 
         return new QReward(matrix);
     }
