@@ -50,6 +50,10 @@ public class QMatrix {
         return values.get(i);
     }
 
+    public int numberOfStates() {
+        return values.size();
+    }
+
     public Float getValue(int state, int action) {
         return values.get(state)
                 .get(action);

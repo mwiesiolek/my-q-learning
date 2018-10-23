@@ -10,7 +10,12 @@ public class QMain {
 
     public static void main(String[] args) {
         QController controller = new QController(createReward(), new QAgent(), new QParameter(0.2f, 0.7f));
-        controller.start(EPISODES, STATES, ACTIONS, 4);
+
+        try {
+            controller.start(EPISODES, STATES, ACTIONS, 4);
+        } catch (NotStateFoundException exc) {
+            System.out.println("All states have been checked.");
+        }
     }
 
     private static QReward createReward() {

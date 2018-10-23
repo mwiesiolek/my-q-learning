@@ -9,13 +9,13 @@ public class QController {
     private QAgent agent;
     private QParameter parameter;
 
-    public void start(int episodes, int states, int actions, int goalState) {
+    public void start(int episodes, int states, int actions, int goalState) throws NotStateFoundException {
         agent.init(states, actions);
 
         for (int i = 0; i < episodes; i++) {
             while (agent.getCurrentState() != goalState) {
-                // todo pick random that was not computed yet
-                int state = reward.pickRandomState();
+
+                Integer state = reward.pickRandomState();
                 agent.setCurrentState(state);
 
                 // todo this needs more robust logic
