@@ -11,6 +11,7 @@ public class QController {
 
     public void start(int episodes, int states, int actions, int goalState) {
         agent.init(states, actions);
+        agent.setReward(reward);
 
         for (int i = 0; i < episodes; i++) {
             Integer state = reward.pickRandomState();
@@ -18,19 +19,19 @@ public class QController {
 
             while (agent.getCurrentState() != goalState) {
                 int action = agent.pickAction();
-
-                // todo determine whether or not that action should be taken
+                int oldState = agent.getCurrentState();
                 agent.setCurrentState(action);
 
-                System.out.println(String.format("Reward %s for (state=%s,action=%s)", reward.getReward(agent.getCurrentState(), action),
-                        agent.getCurrentState(), action));
+                System.out.println(String.format("(state=%s,action=%s)", oldState, action));
+                System.out.println(String.format("Reward %s", reward.getReward(oldState, action)));
 
-                Float newQ = computeQ(state, action);
-                agent.updateQ(action, newQ);
+                Float newQ = computeQ(oldState, action);
+                agent.updateQ(oldState, action, newQ);
             }
 
             float delta = (float) i / episodes;
             agent.updateEpsilon(delta);
+            System.out.println(String.format("Episode: %s", (i + 1)));
         }
 
         agent.printQTable();
@@ -38,11 +39,11 @@ public class QController {
 
     private Float computeQ(int state, int action) {
         return agent.getQ(state, action) + parameter.getLearningRate() * (
-                reward.getReward(state, action) + (parameter.getGamma() * maxFromAdjacent()) - agent.getQ(state, action));
+                reward.getReward(state, action) + (parameter.getGamma() * maxFromAdjacent(action)) - agent.getQ(state, action));
     }
 
-    private Float maxFromAdjacent() {
-        return reward.findAdjacent(agent.getCurrentState())
+    private Float maxFromAdjacent(int action) {
+        return reward.findAdjacent(action)
                 .stream()
                 .max(Float::compareTo)
                 .orElseThrow(NotAdjacementFoundException::new);

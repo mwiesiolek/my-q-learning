@@ -4,22 +4,8 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public class QTable {
+public class QMemory {
     private QMatrix matrix;
-
-    public int findBestAction(int selected) {
-        List<Float> state = matrix.getState(selected);
-
-        Float max = Float.MIN_VALUE;
-        for (Float action : state) {
-            if (action > max) {
-                max = action;
-            }
-        }
-
-        //todo what if there are multiple equal Q values?
-        return state.indexOf(max);
-    }
 
     public Float getValue(int state, int action) {
         return matrix.getValue(state, action);

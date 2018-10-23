@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class QReward {
+    private static final int NOT_EXIST_IDS = -1;
+
     private QMatrix matrix;
     Queue<Integer> states;
 
@@ -29,8 +31,29 @@ public class QReward {
         states.addAll(temp);
     }
 
+    public int findBestAction(int selected) {
+        List<Float> state = matrix.getState(selected);
+
+        Tuple<Integer, Float> max = new Tuple<>(NOT_EXIST_IDS, -1_000.0F);
+        for (int i = 0; i < state.size(); i++) {
+            if (state.get(i) > max.getValue() && selected != i) {
+                max = new Tuple<>(i, state.get(i));
+            }
+        }
+
+        //todo what if there are multiple equal Q values?
+        if (max.getKey() == NOT_EXIST_IDS) {
+            throw new IllegalStateException("Max not found.");
+        }
+        return max.getKey();
+    }
+
     public Float getReward(int state, int action) {
         return matrix.getValue(state, action);
+    }
+
+    public List<Float> getRewardsForState(int state) {
+        return matrix.getState(state);
     }
 
     public Integer pickRandomState() {

@@ -5,8 +5,8 @@ import com.google.common.collect.Lists;
 public class QMain {
 
     private static final int EPISODES = 50;
-    private static final int STATES = 5;
-    private static final int ACTIONS = 5;
+    private static final int STATES = 6;
+    private static final int ACTIONS = 6;
 
     public static void main(String[] args) {
         QController controller = new QController(createReward(), new QAgent(), new QParameter(0.2f, 0.7f));
