@@ -2,7 +2,6 @@ package pl.mw.qlearning;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import lombok.Getter;
@@ -80,6 +79,7 @@ public class QAgent {
 
         Collections.shuffle(availableRewards);
 
-        return availableRewards.get(0).getKey();
+        return availableRewards.get(0)
+                .getKey();
     }
 }
