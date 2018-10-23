@@ -34,8 +34,14 @@ public class QReward {
     }
 
     public Integer pickRandomState() {
-        return Optional.ofNullable(states.poll())
-                .orElseThrow(NotStateFoundException::new);
+
+        Optional<Integer> result = Optional.ofNullable(states.poll());
+        if (result.isPresent()) {
+            return result.get();
+        } else {
+            init();
+            return states.poll();
+        }
     }
 
     public List<Float> findAdjacent(int state) {

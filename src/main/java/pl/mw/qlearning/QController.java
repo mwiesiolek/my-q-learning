@@ -9,7 +9,7 @@ public class QController {
     private QAgent agent;
     private QParameter parameter;
 
-    public void start(int episodes, int states, int actions, int goalState) throws NotStateFoundException {
+    public void start(int episodes, int states, int actions, int goalState) {
         agent.init(states, actions);
 
         for (int i = 0; i < episodes; i++) {
