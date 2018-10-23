@@ -19,7 +19,7 @@ public class QAgent {
     @Setter
     private int currentState;
 
-    private float epsilon = 0.5f;
+    private float epsilon = 1.0f;
 
     public void init(int states, int actions) {
         QMatrix matrix = new QMatrix();
@@ -57,13 +57,15 @@ public class QAgent {
      * this means we use what we already know to select the best action at each step
      */
     private int exploit() {
-        return memory.findBestAction(currentState);
+        System.out.println("exploit");
+        return reward.findBestAction(currentState);
     }
 
     /**
      * This means we need to do a lot of exploration, by randomly choosing our actions.
      */
     private int explore() {
+        System.out.println("explore");
         List<Float> rewards = reward.getRewardsForState(currentState);
 
         List<Tuple<Integer, Float>> availableRewards = new ArrayList<>();
