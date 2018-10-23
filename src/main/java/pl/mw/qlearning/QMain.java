@@ -10,12 +10,13 @@ public class QMain {
 
     public static void main(String[] args) {
         QController controller = new QController(createReward(), new QAgent(), new QParameter(0.2f, 0.7f));
-        controller.start(EPISODES, STATES, ACTIONS, 4);
+        controller.start(EPISODES, STATES, ACTIONS, 5);
     }
 
     private static QReward createReward() {
         QMatrix matrix = new QMatrix();
-        matrix.init(STATES, ACTIONS);
+        matrix.setStates(STATES);
+        matrix.setActions(ACTIONS);
         matrix.addState(Lists.newArrayList(-1.0f, -1.0f, -1.0f, -1.0f, 0.0f, -1.0f));
         matrix.addState(Lists.newArrayList(-1.0f, -1.0f, -1.0f, 0.0f, -1.0f, 100.0f));
         matrix.addState(Lists.newArrayList(-1.0f, -1.0f, -1.0f, 0.0f, -1.0f, -1.0f));

@@ -11,7 +11,7 @@ import java.util.stream.IntStream;
 
 public class QReward {
     private QMatrix matrix;
-    private Queue<Integer> states;
+    Queue<Integer> states;
 
     public QReward(QMatrix matrix) {
         this.matrix = matrix;
@@ -23,7 +23,7 @@ public class QReward {
     private void init() {
         int number = this.matrix.numberOfStates();
         List<Integer> temp = new ArrayList<>();
-        IntStream.of(number)
+        IntStream.range(0, number)
                 .forEach(temp::add);
         Collections.shuffle(temp);
         states.addAll(temp);

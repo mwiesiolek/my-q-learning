@@ -5,11 +5,14 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
 public class QMatrix {
 
+    @Setter
     private int states;
+    @Setter
     private int actions;
 
     /**
@@ -31,11 +34,11 @@ public class QMatrix {
     }
 
     public void addState(List<Float> state) {
-        if (state.size() >= actions) {
+        if (state.size() > (actions + 1)) {
             throw new IllegalArgumentException("To many elements in state list.");
         }
 
-        if (values.size() >= states) {
+        if (values.size() > (states + 1)) {
             throw new IllegalStateException("Cannot add more states since it will exceed the limit.");
         }
 

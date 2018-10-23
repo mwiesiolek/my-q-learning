@@ -18,6 +18,8 @@ public class QController {
 
             while (agent.getCurrentState() != goalState) {
                 int action = agent.pickAction();
+
+                // todo determine whether or not that action should be taken
                 agent.setCurrentState(action);
 
                 System.out.println(String.format("Reward %s for (state=%s,action=%s)", reward.getReward(agent.getCurrentState(), action),
